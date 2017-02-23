@@ -13,16 +13,17 @@ angular.module('itunes').service('itunesService', function($http, $q){
     $http.jsonp('https://itunes.apple.com/search?term=' + artist + '&callback=JSON_CALLBACK').then(function(response){
       var parsedResponse = response.data.results;
       var filterResponse = [];
-
+      // console.log(parsedResponse)
       for (var i=0; i<parsedResponse.length;i++){
           filterResponse[i] = {
             AlbumArt: parsedResponse[i].artworkUrl100,
             Artist: parsedResponse[i].artistName,
             Song: parsedResponse[i].trackName,
-            Collection: parsedResponse[i].collectionName,
-            CollectionPrice: parsedResponse[i].collectionPrice,
+            Album: parsedResponse[i].collectionName,
+            Genre: parsedResponse[i].primaryGenreName,
             Play: parsedResponse[i].previewUrl,
-            Type: parsedResponse[i].kind
+            Cost: parsedResponse[i].trackPrice,
+            Release: parsedResponse[i].releaseDate
           }
       }
       deferred.resolve(filterResponse)
